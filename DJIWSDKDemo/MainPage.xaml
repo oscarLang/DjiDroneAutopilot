@@ -34,8 +34,8 @@
             </StackPanel>
 
             <StackPanel Margin="0,106,11,1" Grid.Row="1" HorizontalAlignment="Right" Grid.Column="1" Width="226">
-                <Button x:Name="StartDebug" Margin="1,0,0,0" Click="StartDebug_Click" RenderTransformOrigin="0.476,3.429" Content="Start Record Flight path" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <Button x:Name="StopRecording" Margin="1,0,0,0" Click="StopDebug_Click" RenderTransformOrigin="0.476,3.429" Content="Stop Record Flight path" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="StartDebug" Margin="1,0,0,0" Click="StartRecording_Click" RenderTransformOrigin="0.476,3.429" Content="Start Record Flight path" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="StopRecording" Margin="1,0,0,0" Click="StopRecording_Click" RenderTransformOrigin="0.476,3.429" Content="Stop Record Flight path" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <Button x:Name="StartUpload" Margin="1,0,0,0" Click="Upload_Click" RenderTransformOrigin="0.476,3.429" Content="Upload" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <Button x:Name="StartMission" Margin="1,0,0,0" Click="StartMission_Click" RenderTransformOrigin="0.476,3.429" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </StackPanel>

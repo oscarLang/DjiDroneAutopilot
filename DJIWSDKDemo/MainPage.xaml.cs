@@ -55,7 +55,7 @@ namespace DJIWSDKDemo
             StartUpload.Visibility = Visibility.Collapsed;
             StartMission.Visibility = Visibility.Collapsed;
         }
-        private async void StartDebug_Click(object sender, RoutedEventArgs e)
+        private async void StartRecording_Click(object sender, RoutedEventArgs e)
         {
             if (DJISDKManager.Instance.ComponentManager != null && this.AirCraftConnected)
             {
@@ -74,10 +74,9 @@ namespace DJIWSDKDemo
                 var message = new MessageDialog("The aircraft has not been connected yet");
                 await message.ShowAsync();
                 System.Diagnostics.Debug.WriteLine("The Application has not been connected yet");
-            }
-                
+            }       
         }
-        private async void StopDebug_Click(object sender, RoutedEventArgs e)
+        private async void StopRecording_Click(object sender, RoutedEventArgs e)
         {
             DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AttitudeChanged -= Instance_AttitudeChanged;
             this.autoPilot.InitWaypointMission(this.waypoints);
