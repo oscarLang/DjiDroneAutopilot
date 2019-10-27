@@ -1,0 +1,58 @@
+﻿<Page
+    x:Class="DJIWSDKDemo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DJIWSDKDemo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="647*"/>
+            <RowDefinition Height="74*"/>
+        </Grid.RowDefinitions>
+        <Grid HorizontalAlignment="Stretch" Margin="0,0,0,0" Grid.RowSpan="2" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="61*"/>
+                <RowDefinition Height="939*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="28*"></ColumnDefinition>
+                <ColumnDefinition Width="97*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <RelativePanel HorizontalAlignment="Center" Height="28" Margin="0,0,0,0" VerticalAlignment="Top" Width="707" Grid.ColumnSpan="2">
+                <TextBlock Name="IsConnected" VerticalAlignment="Top" Margin="78,4,0,0" HorizontalAlignment="Left" Width="151">Aircraft not connected:</TextBlock>
+                <TextBlock Name="WaypointState" Margin="477,4,0,0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="208">Waypoint mission not initalized</TextBlock>
+            </RelativePanel>
+
+            <StackPanel Margin="26,106,0,0" Grid.Row="1" VerticalAlignment="Top" Height="271" HorizontalAlignment="Left" Width="261" Grid.ColumnSpan="2">
+                <Button x:Name="StartTakeOff" Margin="1,0,0,0" Click="StartTakeOff_Click" RenderTransformOrigin="0.476,3.429" Content="Take Off" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="StartLanding" Margin="1,0,0,0" Click="StartLanding_Click" RenderTransformOrigin="0.476,3.429" Content="Land" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="StartSimulator" Margin="1,0,0,0" Click="StartSimulator_Click" RenderTransformOrigin="0.476,3.429" Content="Start Simulator" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Margin="0,106,11,1" Grid.Row="1" HorizontalAlignment="Right" Grid.Column="1" Width="226">
+                <Button x:Name="StartDebug" Margin="1,0,0,0" Click="StartDebug_Click" RenderTransformOrigin="0.476,3.429" Content="Start Record Flight path" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="StopRecording" Margin="1,0,0,0" Click="StopDebug_Click" RenderTransformOrigin="0.476,3.429" Content="Stop Record Flight path" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="StartUpload" Margin="1,0,0,0" Click="Upload_Click" RenderTransformOrigin="0.476,3.429" Content="Upload" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="StartMission" Margin="1,0,0,0" Click="StartMission_Click" RenderTransformOrigin="0.476,3.429" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <RelativePanel HorizontalAlignment="Left" Height="135" Margin="30,0,0,20" VerticalAlignment="Bottom" Width="246" Grid.Row="1">
+                <TextBlock HorizontalAlignment="Center">Longitude:</TextBlock>
+                <TextBlock HorizontalAlignment="Left" Name="OutputLong" Margin="87,0,0,0" Width="105"/>
+                <TextBlock HorizontalAlignment="Center" Margin="0,20,0,-20" VerticalAlignment="Stretch">Latitude:</TextBlock>
+                <TextBlock HorizontalAlignment="Left" Name="OutputLat" Margin="67,24,0,-24" Width="120"/>
+                <TextBlock HorizontalAlignment="Left" Name="OutputPitch" Margin="67,67,0,-67" Width="110"/>
+                <TextBlock HorizontalAlignment="Left" Name="OutputYaw" Margin="67,106,0,-106" Width="110"/>
+                <TextBlock HorizontalAlignment="Left" Name="OutputRoll" Margin="67,86,0,-86" Width="110"/>
+                <TextBlock HorizontalAlignment="Left" Height="20" Margin="1,67,0,0" Text="Pitch:" TextWrapping="Wrap" VerticalAlignment="Top" Width="62.4"/>
+                <TextBlock HorizontalAlignment="Center" Height="20" Margin="-1,106,0,0" Text="Yaw:" TextWrapping="Wrap" VerticalAlignment="Top" Width="62.4"/>
+                <TextBlock HorizontalAlignment="Center" Height="20" Margin="0,86,0,0" Text="Roll:" TextWrapping="Wrap" VerticalAlignment="Top" Width="62.4"/>
+            </RelativePanel>
+        </Grid>
+        <SwapChainPanel x:Name="swapChainPanel"/>
+    </Grid>
+</Page>
