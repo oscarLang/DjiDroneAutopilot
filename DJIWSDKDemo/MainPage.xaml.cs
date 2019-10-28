@@ -43,13 +43,13 @@ namespace DJIWSDKDemo
 
             StartLanding.Visibility = Visibility.Collapsed;
 
-            //Replace with your registered App Key. Make sure your App Key matched your application's package name on DJI developer center.
             DJISDKManager.Instance.RegisterApp("054c9f4be8787e42c7e5e12a");
         }
         
 
         private void resetRecordingVisibility()
         {
+            //resets the visibility of the buttons
             StartDebug.Visibility = Visibility.Visible;
             StopRecording.Visibility = Visibility.Collapsed;
             StartUpload.Visibility = Visibility.Collapsed;
@@ -57,6 +57,7 @@ namespace DJIWSDKDemo
         }
         private async void StartRecording_Click(object sender, RoutedEventArgs e)
         {
+            //starts recording of the flightpath
             if (DJISDKManager.Instance.ComponentManager != null && this.AirCraftConnected)
             {
                 System.Diagnostics.Debug.WriteLine(DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0));
@@ -78,6 +79,8 @@ namespace DJIWSDKDemo
         }
         private async void StopRecording_Click(object sender, RoutedEventArgs e)
         {
+
+            //stops the recording of the flightpath and creates a waypointmission
             DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AttitudeChanged -= Instance_AttitudeChanged;
             this.autoPilot.InitWaypointMission(this.waypoints);
             this.autoPilot.LoadWaypointMission();
@@ -93,7 +96,7 @@ namespace DJIWSDKDemo
         private BasicGeoposition simualtionLocation = new BasicGeoposition() { Latitude = 22.6308, Longitude = 113.812 };
         private async void StartSimulator_Click(object sender, RoutedEventArgs e)
         {
-
+            //initializes a simulator. Usefull for testing
             SimulatorInitializationSettings settings = new SimulatorInitializationSettings
             {
                 latitude = simualtionLocation.Latitude,
@@ -149,7 +152,8 @@ namespace DJIWSDKDemo
         }
 
         private void Upload_Click(object sender, RoutedEventArgs e)
-        {
+        {   
+            //Uploads the waypointmission into the drone
             this.autoPilot.UploadWaypointMission();
             if (this.autoPilot.Uploaded)
             {
@@ -159,6 +163,7 @@ namespace DJIWSDKDemo
         }
         private void StartMission_Click(object sender, RoutedEventArgs e)
         {
+            //starts the waypointmission
             this.autoPilot.StartWaypointMission();
             StartMission.Visibility = Visibility.Collapsed;
             if (this.autoPilot.Started)
@@ -170,6 +175,8 @@ namespace DJIWSDKDemo
         }
         private async void Instance_AircraftLocationChanged(object sender, LocationCoordinate2D? value)
         {
+
+            //eventlistener for when the aircraftlocation changes. Used for displaying Lon/Lat on screen
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
             {
                 if (value.HasValue)
@@ -183,6 +190,8 @@ namespace DJIWSDKDemo
 
         private async void Instance_AttitudeChanged(object sender, Attitude? value)
         {
+            //eventlistener for when the Attitude changes
+
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
             {
                 if (value.HasValue)
@@ -196,8 +205,9 @@ namespace DJIWSDKDemo
                     OutputYaw.Text = yaw.ToString();
                     OutputRoll.Text = roll.ToString();
 
+                    //creates a waypoint if allowed to
                     if (satisfactoryChange(yaw, LastWayPointAttitude.yaw) || satisfactoryChange(pitch, LastWayPointAttitude.pitch) || satisfactoryChange(roll, LastWayPointAttitude.roll))
-                    {
+                    {    
                         LastWayPointAttitude = value.Value;
                         LastWaypointTime = System.DateTime.Now;
                         var altitude = await DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).GetAltitudeAsync();
@@ -231,7 +241,7 @@ namespace DJIWSDKDemo
 
         private bool satisfactoryChange(double oldValue, double newValue)
         {
-            //måste nog kolla tiden också 
+            //Satisfactory if the attitude has changed with 20 degrees in any direction and 1500ms has passed
             double changeNeeded = 20;
             double changed = oldValue - newValue;
             System.DateTime now = System.DateTime.Now;
@@ -246,7 +256,7 @@ namespace DJIWSDKDemo
                 changed = changed * -1;
             }
 
-            if (changed >= changeNeeded && diffSec > 1000) {
+            if (changed >= changeNeeded && diffSec > 1500) {
                 satisfactory = true;
             }
             return satisfactory;
@@ -364,6 +374,7 @@ namespace DJIWSDKDemo
 
         private async void Instance_SDKRegistrationEvent(SDKRegistrationState state, SDKError resultCode)
         {
+            //register the application to the DJI Windows SDK
             if (resultCode == SDKError.NO_ERROR)
             {
                 System.Diagnostics.Debug.WriteLine("Register app successfully.");

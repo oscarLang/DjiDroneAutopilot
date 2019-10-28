@@ -39,9 +39,9 @@ namespace DJIWSDKDemo
             }
         }
 
+        //returns a new waypoint
         public Waypoint CreateWaypoint(double lat, double lon, double alt = 10, double spd = 0, int hdng = 0)
         {
-
             Waypoint newWaypoint = new Waypoint()
             {
                 location = new LocationCoordinate2D() { latitude = lat, longitude = lon },
@@ -93,7 +93,7 @@ namespace DJIWSDKDemo
                 _waypointMission = value;
             }
         }
-
+        //creates and inits a new waypointmission
         public void InitWaypointMission(List<Waypoint> waypoints)
         {
             System.Diagnostics.Debug.WriteLine(waypoints.Count());
@@ -115,7 +115,7 @@ namespace DJIWSDKDemo
             };
             WaypointMission = wpMission;
         }
-        //load, upload, start
+        //loads the waypointmission into the computer memory.
         public async void LoadWaypointMission()
         {
             //loads waypoint into computer memory
@@ -132,12 +132,10 @@ namespace DJIWSDKDemo
             await message.ShowAsync();
 
         }
-
+        //Uploads the waypointmission to the drone.
         public async void UploadWaypointMission()
         {
-            //Uploads waypoint mission to aircraft
-            System.Diagnostics.Debug.WriteLine(WaypointMission);
-
+            //can only be uploaded if the wpmission has been set.
             SDKError err = await DJISDKManager.Instance.WaypointMissionManager.GetWaypointMissionHandler(0).UploadMission();
             var message = new MessageDialog("Uploaded mission to aircraft: " + err.ToString());
             await message.ShowAsync();
@@ -149,7 +147,7 @@ namespace DJIWSDKDemo
 
         public async void StartWaypointMission()
         {
-            //Start the waypointmission
+            //Start the waypointmission if there is one uploaded to the drone
             var isFlying = await DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).GetIsFlyingAsync();
             if (isFlying.value.Value.value == true)
             {
@@ -170,7 +168,7 @@ namespace DJIWSDKDemo
         }
         public async void StopWaypointMission()
         {
-            //Uploads waypoint mission to aircraft
+            //Stops/aborts the waypointmission
             SDKError err = await DJISDKManager.Instance.WaypointMissionManager.GetWaypointMissionHandler(0).StopMission();
             var message = new MessageDialog("Mission stopped, " + err.ToString());
             await message.ShowAsync();
